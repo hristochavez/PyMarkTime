@@ -1,4 +1,4 @@
--- Create table employees.
+-- Creación de tabla de empleados.
 CREATE TABLE employees(
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	dni VARCHAR(8) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE employees(
 	CONSTRAINT uniq_dni UNIQUE(dni)
 );
 
--- Insert users.
+-- Insertar usuarios.
 INSERT INTO 
 	employees(dni, first_name, pass)
 VALUES 

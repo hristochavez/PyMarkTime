@@ -1,3 +1,4 @@
+-- Procedimiento almacenado para inicio de sesión de empleados.
 USE `marcaciones`;
 DROP PROCEDURE IF_EXISTS `login_employee`;
 DELIMITER $
