@@ -9,8 +9,10 @@ def hash_password(password):
 
 # Inicio de sesión.
 def login_view(user, password):
+    # Comunicación con model login.
     result = m_login(user, hash_password(password))
 
+    # Acciones a realizar dependiendo de la respuesta de la consulta.
     if isinstance(result[0], tuple) and len(result[0]) == 0:
         return result[1]
     elif result[0] is None:

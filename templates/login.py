@@ -16,9 +16,13 @@ def login_menu():
     clean_screen()
     banner()
 
+    # Solicitar credenciales al usuario.
     credentials = get_credentials()
+
+    # Comunicación con view login.
     result = login_view(credentials[0], credentials[1])
 
+    # Acciones a realizar dependiendo de la respuesta de la consulta.
     if isinstance(result, tuple):
         mark_menu(result)
     else:
