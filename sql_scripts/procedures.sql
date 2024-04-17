@@ -17,3 +17,16 @@ BEGIN
         x.pass = pass;
 END $
 DELIMITER ;
+
+-- Procedimiento almacenado para que empleados hagan sus marcaciones.
+USE marcaciones;
+DROP PROCEDURE IF_EXISTS mark;
+DELIMITER $
+CREATE PROCEDURE mark(
+    IN dni VARCHAR(8)
+)
+BEGIN
+	INSERT INTO markings(dni, mark_time)
+	VALUES (dni, NOW());
+END $
+DELIMITER ;
