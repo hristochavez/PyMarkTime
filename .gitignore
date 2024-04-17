@@ -4,6 +4,9 @@ env_dev/
 # PyCharm
 .idea/
 
+# Eclipse.
+.project
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
