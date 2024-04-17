@@ -13,3 +13,15 @@ INSERT INTO
 VALUES 
 	('74576066', 'hristo', SHA2('1234', 256)),
 	('75328598', 'rosmery', SHA2('1234', 256));
+
+-- Creación de tabla de marcaciones.
+CREATE TABLE markings(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	dni VARCHAR(8) NOT NULL,
+	mark_time DATETIME NOT NULL,
+	CONSTRAINT fk_dni_mark FOREIGN KEY (dni)
+	REFERENCES employees(dni)
+);
+
+-- Insertar marcaciones.
+CALL mark('74576066');
