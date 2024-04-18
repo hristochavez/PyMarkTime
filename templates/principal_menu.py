@@ -4,23 +4,23 @@ from templates.login import login_menu
 
 
 # Vista a mostrar según elección del usuario.
-def show_view(user_opt):
-    if user_opt == '1':
+def show_menu(usr_opt):
+    if usr_opt == '1':
         login_menu()
 
 
 # Retorna la opción seleccionada por el usuario.
-def option_selected():
-    user_input = input('Elija una opción de la lista: ')
+def get_option_selected():
+    usr_input = input('Elija una opción de la lista: ')
 
-    while user_input not in ['1']:
-        user_input = input('Elija una opción valida de la lista: ')
+    while usr_input not in ['1']:
+        usr_input = input('Elija una opción valida de la lista: ')
 
-    return user_input
+    return usr_input
 
 
-# Vista del menú principal del sistema.
-def principal():
+# Menú principal del sistema.
+def principal_menu():
     clean_screen()
     banner()
 

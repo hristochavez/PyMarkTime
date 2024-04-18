@@ -1,6 +1,6 @@
 from templates.banner import banner
 from templates.commons import clean_screen
-from views.mark import mark_view
+from views.mark import employe_mark
 
 
 # Retorna la opción elegida por el usuario.
@@ -12,11 +12,15 @@ def option_selected():
     return usr_input
 
 
-# Menú de inicio de sesión.
-def mark_menu(user):
+# Menú para hacer una marcación.
+def mark_menu(employee):
     clean_screen()
     banner()
-    print(f'DNI: {user[0]}')
-    print(f'Bienvenido {user[1]}')
+
+    dni = employee[0]
+    name_employee = employee[1]
+
+    print(f'DNI: {dni}')
+    print(f'Bienvenido {name_employee}')
     usr_input = option_selected()
-    mark_view(user[0], usr_input)
+    employe_mark(employee[0], usr_input)

@@ -2,11 +2,15 @@ from models.connection import connect_to_db
 from mysql.connector import errors
 
 
-# Crea un registro que representa la marcación de un usuario.
+# Intenta realizar la marcacioń de un empleado.
+# Retorna:
+# True o False si la marcación se realizó correctamente.
+# Una cadena con un mensaje de error en el caso fallar la operación.
 def marktime(dni):
+    # Indica si la marcación se realizón con exito.
     correct_marking = True
 
-    # Se intenta una conexión con el servidor.
+    # Se intenta una conexión con la BBDD.
     connection_result = connect_to_db()
 
     # Contiene la respuesta luego de intentar una conexión.
@@ -40,36 +44,47 @@ def marktime(dni):
     return correct_marking, response_message
 
 
-def login(user, password):
+# Intenta iniciar la sesión de un empleado.
+# Retorna:
+# Una tupla que contiene la información del usuario en el caso de que exista,
+# una tupla vacia si la consulta no retorna algun empleado y None si se
+# enviaron tipos de datos incorrectos al hacer la consulta como por ejemplo
+# enviar 7 digitos cuando se ingresa el DNI.
+# Una cadena con un mensaje de error en el caso fallar la operación.
+def login(dni, password):
     # Contiene una tupla con los datos del usuario que inició sesión.
-    result = ()
+    employee = ()
 
     # Se intenta una conexión con el servidor.
-    connection_response = connect_to_db()
+    connection_result = connect_to_db()
 
     # Contiene la respuesta luego de intentar una conexión.
-    message = connection_response[1]
+    response_message = ''
+
+    # Conexión con la BBDD.
+    connection = connection_result[0]
 
     try:
-        curs = connection_response[0].cursor()
+        cs = connection.cursor()
         stored_proc = 'login_employee'
-        parameters = (user, password)
-        curs.callproc(stored_proc, parameters)
+        parameters = (dni, password)
+        cs.callproc(stored_proc, parameters)
 
-        for row in curs.stored_results():
-            result = row.fetchone()
+        for row in cs.stored_results():
+            employee = row.fetchone()
+
     except AttributeError:
-        message = connection_response[1]
+        response_message = connection_result[1]
     except errors.ProgrammingError:
-        message = 'Error al preparar la consulta.'
-        curs.close()
-        connection_response[0].close()
+        response_message = 'Error al preparar la consulta.'
+        cs.close()
+        connection.close()
     except errors.DataError:
-        message = 'DNI o contraseña incorrecta.'
-        curs.close()
-        connection_response[0].close()
+        response_message = 'DNI o contraseña incorrecta.'
+        cs.close()
+        connection.close()
     else:
-        curs.close()
-        connection_response[0].close()
+        cs.close()
+        connection.close()
 
-    return result, message
+    return employee, response_message
