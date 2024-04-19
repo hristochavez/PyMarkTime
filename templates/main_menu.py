@@ -1,12 +1,12 @@
 from templates.banner import banner
 from templates.commons import decorator, qty_chars, clean_screen
-from templates.login import login_menu
+from templates.login import login_screen
 
 
 # Vista a mostrar según elección del usuario.
 def show_menu(usr_opt):
     if usr_opt == '1':
-        login_menu()
+        login_screen()
 
 
 # Retorna la opción seleccionada por el usuario.

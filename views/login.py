@@ -1,4 +1,6 @@
-from models.employees import login
+from models.employees import get_employee
+from templates.employee_menu import employee_menu
+import templates.login
 import hashlib
 
 
@@ -8,14 +10,26 @@ def hash_password(employee_pass):
 
 
 # Envia los datos para un inicio de sesión de un empleado.
-def init_login(dni, password):
+def login_employee(dni, password):
     # Comunicación con el modelo.
-    result = login(dni, hash_password(password))
+    result = get_employee(dni, hash_password(password))
 
-    # Acciones a realizar dependiendo de la respuesta de la consulta.
-    if isinstance(result[0], tuple) and len(result[0]) == 0:
-        return result[1]
-    elif result[0] is None:
-        return 'El usuario no existe.'
+    # Si retorna más de un empleado llama al menú de empleados.
+    if len(result):
+        dni = result[0][0]
+        first_name = result[0][1]
+        permissions = []
+        for row in result:
+            permissions.append(row[2])
+
+        employee = {
+            'dni': dni,
+            'first_name': first_name,
+            'permissions': permissions
+        }
+
+        employee_menu(employee)
     else:
-        return result[0]
+        # Si no retorna ningun resultado vuelve a mostrar el menú de inicio de
+        # sesión.
+        templates.login.login_screen(fail=True)

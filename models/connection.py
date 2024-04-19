@@ -2,7 +2,6 @@ from mysql.connector import connect, Error
 
 
 def connect_to_db():
-    message = ''
     connection = None
 
     try:
@@ -10,10 +9,10 @@ def connect_to_db():
             host='localhost',
             user='usr-dev',
             password='Hack2024$$',
-            database='marcaciones'
+            database='pymarktime'
         )
     except Error:
-        message = 'Error al conectarse a la base de datos.'
-    
-    return connection, message
+        print('Error al conectarse a la BBDD.')
+
+    return connection
 

@@ -1,29 +1,34 @@
 -- Procedimiento almacenado para inicio de sesión de empleados.
-USE `marcaciones`;
-DROP PROCEDURE IF_EXISTS `login_employee`;
+USE marcaciones;
+DROP PROCEDURE IF_EXISTS login_employee;
 DELIMITER $
-CREATE PROCEDURE login_employee(
-    IN dni VARCHAR(8),
+CREATE PROCEDURE get_employee(
+    IN dni CHAR(8),
     IN pass CHAR(64)
 )
 BEGIN
-    SELECT 
-        x.dni,
-        x.first_name
-    FROM 
-        employees AS x
+    SELECT
+		t1.dni,
+		t1.first_name,
+		t2.permission
+	FROM
+		employees AS t1
+	INNER JOIN
+		employee_permission AS t2
+	ON
+		t1.dni = t2.dni
     WHERE 
-        x.dni = dni AND 
-        x.pass = pass;
+        t1.dni = dni AND 
+        t1.pass = pass;
 END $
 DELIMITER ;
 
 -- Procedimiento almacenado para que empleados hagan sus marcaciones.
-USE marcaciones;
+USE pymarktime;
 DROP PROCEDURE IF_EXISTS mark;
 DELIMITER $
-CREATE PROCEDURE mark(
-    IN dni VARCHAR(8)
+CREATE PROCEDURE marktime(
+    IN dni CHAR(8)
 )
 BEGIN
 	INSERT INTO markings(dni, mark_time)

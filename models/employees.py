@@ -7,7 +7,7 @@ from mysql.connector import errors
 # True o False si la marcación se realizó correctamente.
 # Una cadena con un mensaje de error en el caso fallar la operación.
 def marktime(dni):
-    # Indica si la marcación se realizón con exito.
+    # Indica si la marcación se realizó con exito.
     correct_marking = True
 
     # Se intenta una conexión con la BBDD.
@@ -21,7 +21,7 @@ def marktime(dni):
 
     try:
         cs = connection.cursor()
-        stored_proc = 'mark'
+        stored_proc = 'marktime'
         parameters = (dni, )
         cs.callproc(stored_proc, parameters)
         connection.commit()
@@ -51,40 +51,37 @@ def marktime(dni):
 # enviaron tipos de datos incorrectos al hacer la consulta como por ejemplo
 # enviar 7 digitos cuando se ingresa el DNI.
 # Una cadena con un mensaje de error en el caso fallar la operación.
-def login(dni, password):
+def get_employee(dni, password):
     # Contiene una tupla con los datos del usuario que inició sesión.
-    employee = ()
+    result_set = []
 
     # Se intenta una conexión con el servidor.
     connection_result = connect_to_db()
 
-    # Contiene la respuesta luego de intentar una conexión.
-    response_message = ''
-
     # Conexión con la BBDD.
-    connection = connection_result[0]
+    connection = connection_result
 
     try:
         cs = connection.cursor()
-        stored_proc = 'login_employee'
+        stored_proc = 'get_employee'
         parameters = (dni, password)
         cs.callproc(stored_proc, parameters)
 
         for row in cs.stored_results():
-            employee = row.fetchone()
+            result_set = row.fetchall()
 
-    except AttributeError:
-        response_message = connection_result[1]
+    except AttributeError as err:
+        print(f'Error. Revisar: {err}.')
     except errors.ProgrammingError:
-        response_message = 'Error al preparar la consulta.'
+        print('Error al preparar la consulta.')
         cs.close()
         connection.close()
     except errors.DataError:
-        response_message = 'DNI o contraseña incorrecta.'
+        print('Formato de datos enviados incorrectos.')
         cs.close()
         connection.close()
     else:
         cs.close()
         connection.close()
 
-    return employee, response_message
+    return result_set

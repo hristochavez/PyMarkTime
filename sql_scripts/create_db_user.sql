@@ -2,10 +2,15 @@
 CREATE USER `usr-dev`@`localhost` IDENTIFIED BY `Hack2024$$`;
 
 -- Create the database.
-CREATE DATABASE `marcaciones`;
+CREATE DATABASE pymarktime;
 
 -- Give permissions to the user created in the database.
-GRANT ALL PRIVILEGES ON `marcaciones`.* TO `usr-dev`@`localhost`;
+GRANT 
+	ALL PRIVILEGES 
+ON 
+	pymarktime.* 
+TO 
+	'usr-dev'@'localhost';
 
 -- Give permissions to create and run store procedures.
 GRANT 
@@ -13,4 +18,6 @@ GRANT
     CREATE ROUTINE, 
     EXECUTE 
 ON 
-    `marcaciones`.* TO `usr-dev`@`localhost`;
+	pymarktime.* 
+TO 
+	'usr-dev'@'localhost';
