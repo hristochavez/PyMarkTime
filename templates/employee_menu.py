@@ -7,10 +7,9 @@ from templates.commons import clean_screen
 # 3 -> puede actualizar empleados.
 # 4 -> puede inhabilitar empleados.
 actions = {
-    1: 'Realizar una marcación.',
+    1: 'Realizar marcación.',
     2: 'Registrar a un empleado.',
-    3: 'Actualizar a un empleado.',
-    4: 'Inhabilitar a un empleado.'
+    3: 'Inhabilitar a un empleado.'
 }
 
 
