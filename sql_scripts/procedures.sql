@@ -25,7 +25,7 @@ DELIMITER ;
 
 -- Procedimiento almacenado para que empleados hagan sus marcaciones.
 USE pymarktime;
-DROP PROCEDURE IF_EXISTS create_mark;
+DROP PROCEDURE IF_EXISTS create_marktime;
 DELIMITER $
 CREATE PROCEDURE create_marktime(
     IN dni CHAR(8)
