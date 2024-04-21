@@ -82,3 +82,40 @@ def get_employee(dni, password):
         connection.close()
 
     return result_set
+
+
+# Crear a un empleado.
+def create_employee(new_employee):
+    # Indica si la marcación se realizó con exito.
+    success_create = True
+
+    # Se intenta una conexión con la BBDD.
+    connection_result = connect_to_db()
+
+    # Conexión con la BBDD.
+    connection = connection_result
+
+    try:
+        cs = connection.cursor()
+        stored_proc = 'create_employee'
+        parameters = (new_employee['dni'], new_employee['first_name'])
+        cs.callproc(stored_proc, parameters)
+        connection.commit()
+    except AttributeError as err:
+        print(f'Ocurio un error. Revisar: {err}.')
+    except errors.IntegrityError:
+        success_create = False
+        connection.rollback()
+    except errors.ProgrammingError:
+        print('¿Existe el procedimiento almacenado?')
+        cs.close()
+        connection.close()
+    except errors.DataError:
+        print('¿Ha sido la data formateada correctamente para realizar la operación?')
+        cs.close()
+        connection.close()
+    else:
+        cs.close()
+        connection.close()
+
+    return success_create
