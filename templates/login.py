@@ -6,8 +6,8 @@ from colorama import Fore
 
 # Retorna el DNI y la contraseña ingresada por el usuario.
 def get_dni_pass():
-    dni = input(Fore.WHITE + 'Ingrese su DNI: ')
-    password = input(Fore.WHITE + 'Ingrese su contraseña: ')
+    dni = input('Ingrese su DNI: ')
+    password = input('Ingrese su contraseña: ')
     decorator()
 
     # Tratamiento de información ingresada con el usuario:
@@ -25,7 +25,7 @@ def login_screen(fail=False):
     banner()
 
     if fail:
-        print(Fore.RED + 'DNI o contraseña incorrecta.')
+        print(Fore.RED + 'DNI o contraseña incorrecta.' + Fore.WHITE)
         print('')
 
     # Solicitar DNI y contraseña al usuario.

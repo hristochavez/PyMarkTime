@@ -13,6 +13,23 @@ actions = {
 }
 
 
+# Ejecuta la acción elegida por el usuario.
+# Obtiene la acción a realizar de la lista de acciones que puede realizar
+# el usuario.
+def action_to_do(employee_actions, selected_action, dni=None):
+    do = 0
+
+    for action in employee_actions:
+        if str(action[0]) == selected_action:
+            do = action[1]
+            break
+
+    if do == 1:
+        create_marktime(dni)
+    elif do == 2:
+        create_employee(new_employee())
+
+
 # Retorna una lista de acciones que puede realizar un usuario donde cada
 # acciónn es una tupla conformada por:
 # (número de opción a mostrar, llave, valor).
@@ -31,11 +48,13 @@ def get_actions(permissions):
     return permitted_actions
 
 
-# Recoge la información necesaria para crear a un nuevo empleado.
+# Recoge la información necesaria para crear a un empleado.
 def new_employee():
     dni = input('Ingrese el DNI del empleado (8 caracteres): ')
-    first_name = input('Ingrese el nombre del empleado(solo debe contener letras): ')
+    first_name = input('Ingrese el nombre del empleado (solo debe contener '
+                       'letras): ')
 
+    # Formatea la información del nuevo empleado.
     employee = {
         'dni': dni,
         'first_name': first_name
@@ -55,30 +74,18 @@ def employee_menu(employee):
 
     # Muestra los permisos que tiene el usuario.
     print('Usted tiene los siguientes permisos:')
-    actions = get_actions(employee['permissions'])
+    employee_actions = get_actions(employee['permissions'])
 
-    for action in actions:
+    for action in employee_actions:
         print(f'{action[0]}.- {action[2]}')
 
     # Pregunta al usuario por la acción a realizar.
-    valid_actions = [str(x) for x in range(1, len(actions) + 1)]
+    valid_actions = [str(x) for x in range(1, len(employee_actions) + 1)]
     print('')
     selected_action = input('Elija el número de acción a realizar: ')
 
     while selected_action not in valid_actions:
         selected_action = input('Elija el número de acción a realizar: ')
 
-    # Ejecuta la acción elegida por el usuario.
-    # Obtiene la acción a realizar de la lista de acciones que puede realizar
-    # el usuario.
-    action_to_do = 0
-
-    for action in actions:
-        if str(action[0]) == selected_action:
-            action_to_do = action[1]
-            break
-
-    if action_to_do == 1:
-        create_marktime(employee['dni'])
-    elif action_to_do == 2:
-        create_employee(new_employee())
+    # Realiza la acción seleccionada por el usuario.
+    action_to_do(employee_actions, selected_action, employee['dni'])
