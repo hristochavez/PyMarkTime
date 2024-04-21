@@ -35,3 +35,24 @@ BEGIN
 	VALUES (dni, NOW());
 END $
 DELIMITER ;
+
+-- Crea un empleado.
+USE pymarktime;
+DROP PROCEDURE IF_EXISTS create_employee;
+DELIMITER $
+CREATE PROCEDURE create_employee(
+	IN dni CHAR(8),
+	IN first_name VARCHAR(30)
+)
+BEGIN
+	DECLARE pass CHAR(64);
+	
+	SELECT SHA2('1234', 256) INTO pass;
+
+	INSERT INTO employees(dni, first_name, pass)
+	VALUES(dni, first_name, pass);
+	
+	INSERT INTO employee_permission(dni, permission)
+	VALUES(dni, 1);
+END $
+DELIMITER ;

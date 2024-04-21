@@ -1,6 +1,6 @@
 from templates.banner import banner
 from templates.commons import clean_screen
-from views.actions import create_marktime
+from views.actions import create_marktime, create_employee
 
 # Permisos que puede tener un empleado:
 # 1 -> puede marcar.
@@ -31,6 +31,19 @@ def get_actions(permissions):
     return permitted_actions
 
 
+# Recoge la información necesaria para crear a un nuevo empleado.
+def new_employee():
+    dni = input('Ingrese el DNI del empleado (8 caracteres): ')
+    first_name = input('Ingrese el nombre del empleado(solo debe contener letras): ')
+
+    employee = {
+        'dni': dni,
+        'first_name': first_name
+    }
+
+    return employee
+
+
 # Muestra el meńu principal del empleado.
 def employee_menu(employee):
     clean_screen()
@@ -59,6 +72,7 @@ def employee_menu(employee):
     # Obtiene la acción a realizar de la lista de acciones que puede realizar
     # el usuario.
     action_to_do = 0
+
     for action in actions:
         if str(action[0]) == selected_action:
             action_to_do = action[1]
@@ -66,3 +80,5 @@ def employee_menu(employee):
 
     if action_to_do == 1:
         create_marktime(employee['dni'])
+    elif action_to_do == 2:
+        create_employee(new_employee())
