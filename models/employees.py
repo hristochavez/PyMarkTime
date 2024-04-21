@@ -6,42 +6,40 @@ from mysql.connector import errors
 # Retorna:
 # True o False si la marcación se realizó correctamente.
 # Una cadena con un mensaje de error en el caso fallar la operación.
-def marktime(dni):
+def create_marktime(dni):
     # Indica si la marcación se realizó con exito.
-    correct_marking = True
+    success_marking = True
 
     # Se intenta una conexión con la BBDD.
     connection_result = connect_to_db()
 
-    # Contiene la respuesta luego de intentar una conexión.
-    response_message = ''
-
     # Conexión con la BBDD.
-    connection = connection_result[0]
+    connection = connection_result
 
     try:
         cs = connection.cursor()
-        stored_proc = 'marktime'
+        stored_proc = 'create_marktime'
         parameters = (dni, )
         cs.callproc(stored_proc, parameters)
         connection.commit()
-    except AttributeError:
-        response_message = connection_result[1]
+    except AttributeError as err:
+        print(f'Ocurio un error. Revisar: {err}.')
     except errors.IntegrityError:
-        response_message = 'El empleado no existe. No se puede realizar marca.'
+        success_marking = False
+        connection.rollback()
     except errors.ProgrammingError:
-        response_message = 'Error al preparar la consulta.'
+        print('¿Existe el procedimiento almacenado?')
         cs.close()
         connection.close()
     except errors.DataError:
-        response_message = 'DNI o contraseña incorrecta.'
+        print('¿Ha sido la data formateada correctamente para realizar la operación?')
         cs.close()
         connection.close()
     else:
         cs.close()
         connection.close()
 
-    return correct_marking, response_message
+    return success_marking
 
 
 # Intenta iniciar la sesión de un empleado.
@@ -69,7 +67,6 @@ def get_employee(dni, password):
 
         for row in cs.stored_results():
             result_set = row.fetchall()
-
     except AttributeError as err:
         print(f'Error. Revisar: {err}.')
     except errors.ProgrammingError:
