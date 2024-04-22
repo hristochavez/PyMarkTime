@@ -2,19 +2,40 @@ from templates.banner import banner
 from templates.commons import clean_screen, decorator
 from views.login import login_employee
 from colorama import Fore
+import re
+
+
+# Validación de DNI.
+# DNI: Compuesta de 8 dígitos.
+def validate_dni(dni):
+    pattern = r'^\d{8}$'
+    while not re.match(pattern, dni):
+        print(Fore.RED + 'Ingrese un DNI valido. Solo debe de tener 8 '
+                         'dígitos.' + Fore.WHITE)
+        dni = input('Ingrese su DNI:')
+
+    return dni
+
+
+# Validación de contraseña.
+# Contraseña: Compuesta de 4 dígitos.
+def validate_password(password):
+    pattern = r'^\d{4}$'
+    while not re.match(pattern, password):
+        print(Fore.RED + 'Ingrese una contraseña valida. Solo debe de tener 4 '
+                   'dígitos.' + Fore.WHITE)
+        password = input('Ingrese su contraseña:')
+
+    return password
 
 
 # Retorna el DNI y la contraseña ingresada por el usuario.
 def get_dni_pass():
     dni = input('Ingrese su DNI: ')
-    password = input('Ingrese su contraseña: ')
-    decorator()
+    dni = validate_dni(dni)
 
-    # Tratamiento de información ingresada con el usuario:
-    # DNI: Solo tiene 8 caracteres y está compuesta de números.
-    dni = dni[:8].strip()
-    # Contraseña: Solo tiene 4 caracteres y está compuesta de números.
-    password = password[:4].strip()
+    password = input('Ingrese su contraseña: ')
+    password = validate_password(password)
 
     return dni, password
 
