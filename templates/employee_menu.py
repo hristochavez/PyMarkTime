@@ -1,8 +1,11 @@
 import re
+import time
+import views.actions as va
+import views.login as vl
 from colorama import Fore
 from templates.banner import banner
 from templates.commons import clean_screen
-from views.actions import create_marktime, create_employee
+
 
 # Permisos que puede tener un empleado:
 # 1 -> puede marcar.
@@ -25,6 +28,7 @@ def validate_dni(dni):
         dni = input('Ingrese su DNI:')
 
     return dni
+
 
 # Validación del nombre.
 # Nombre: Solo debe de tener letras.
@@ -57,22 +61,32 @@ def new_employee():
     return employee
 
 
-# Retorna una lista de acciones que puede realizar un usuario donde cada
-# acciónn es una tupla conformada por:
-# (número de opción a mostrar, llave, valor).
-def get_actions(permissions):
-    # Lista de acciones permitidas.
-    permitted_actions = []
+# Procesa la inhabilitación de un empleado.
+def disable_employee(result, dni_employee_to_disable, dni):
+    if result is None:
+        print(Fore.RED, end='')
+        print(f'El empleado con DNI {dni_employee_to_disable} no existe.')
+        print(Fore.WHITE, end='')
+        time.sleep(2.5)
+    elif result[1] == 0:
+        print(Fore.RED, end='')
+        print(f'El empleado {result[0]} con DNI {dni_employee_to_disable}'
+              ' ya se encuentra inhabilitado.')
+        print(Fore.WHITE, end='')
+        time.sleep(2.5)
+    elif result[1] == 1:
+        print(Fore.YELLOW, end='')
+        disable_emp = input(f'¿Desea inhabilitar al empleado {result[0]} con '
+                            'DNI {dni_employee_to_disable}? Escriba S o N: ')
+        print(Fore.WHITE, end='')
 
-    # Llenar la lista de acciones permitidas de acuerdo a los permisos que
-    # tiene el usuario.
-    num_opt = 1
-    for key, value in actions.items():
-        if key in permissions:
-            permitted_actions.append((num_opt, key, value))
-            num_opt += 1
+        while disable_emp not in ['S', 's', 'n', 'N']:
+            disable_emp = input('Escriba S o N para inhabilitar al empleado.')
 
-    return permitted_actions
+        if disable_emp == 's' or disable_emp == 'S':
+            va.disable_employee(dni_employee_to_disable, dni)
+
+    employee_menu(vl.logged_employee)
 
 
 # Ejecuta la acción elegida por el usuario.
@@ -87,9 +101,38 @@ def action_to_do(employee_actions, selected_action, dni=None):
             break
 
     if do == 1:
-        create_marktime(dni)
+        va.create_marktime(dni)
     elif do == 2:
-        create_employee(new_employee())
+        va.create_employee(new_employee())
+    elif do == 3:
+        # Solicita el dni del empleado a inhabilitar.
+        dni_employee_to_disable = input('Ingrese el DNI del empleado'
+                                        ' (8 caracteres): ')
+        dni_employee_to_disable = validate_dni(dni_employee_to_disable)
+
+        # Resultado de la solicitud de la información del empleado.
+        result = va.employee_information(dni_employee_to_disable)
+
+        # Inhabilitación del empleado.
+        disable_employee(result, dni_employee_to_disable, dni)
+
+
+# Retorna una lista de acciones que puede realizar un usuario donde cada
+# acciónn es una tupla conformada por:
+# (número de opción a mostrar, llave de la acción, descripción de la acción).
+def get_actions(permissions):
+    # Lista de acciones permitidas.
+    permitted_actions = []
+
+    # Llena la lista de acciones permitidas de acuerdo a los permisos que
+    # tiene el usuario.
+    num_opt = 1
+    for key, value in actions.items():
+        if key in permissions:
+            permitted_actions.append((num_opt, key, value))
+            num_opt += 1
+
+    return permitted_actions
 
 
 # Muestra el meńu principal del empleado.
@@ -103,17 +146,19 @@ def employee_menu(employee):
 
     # Muestra los permisos que tiene el usuario.
     print('Usted tiene los siguientes permisos:')
+    # employee['permissions'] contiene una tupla con los id de los permisos
+    # que tiene el usuario.
     employee_actions = get_actions(employee['permissions'])
-
     for action in employee_actions:
         print(f'{action[0]}.- {action[2]}')
 
     # Pregunta al usuario por la acción a realizar.
-    valid_actions = [str(x) for x in range(1, len(employee_actions) + 1)]
+    # Cantidad de acciones permitidas.
+    qty_actions = [str(x) for x in range(1, len(employee_actions) + 1)]
+
     print('')
     selected_action = input('Elija el número de acción a realizar: ')
-
-    while selected_action not in valid_actions:
+    while selected_action not in qty_actions:
         selected_action = input('Elija el número de acción a realizar: ')
 
     # Realiza la acción seleccionada por el usuario.

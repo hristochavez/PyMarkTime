@@ -31,3 +31,19 @@ def create_employee(employee_info):
 
     # Redirección al menú de empleados.
     te.employee_menu(vl.logged_employee)
+
+
+# Información del empleado a inhabilitar.
+def employee_information(dni):
+    return me.employee_information(dni)
+
+
+# Inhabilitación de un empleado.
+def disable_employee(dni_employee_to_disable, dni):
+    if me.disable_employee(dni_employee_to_disable, dni):
+        print(Fore.GREEN + 'Empleado inhabilitado correctamente.' + Fore.WHITE)
+        time.sleep(1.5)
+    else:
+        print(Fore.RED + 'Ocurrio un error al inhabilitar al empleado. Vuelva '
+                         'a intentarlo' + Fore.WHITE)
+        time.sleep(2.5)
