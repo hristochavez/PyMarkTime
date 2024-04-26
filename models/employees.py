@@ -11,10 +11,7 @@ def create_marktime(dni):
     success_marking = True
 
     # Se intenta una conexión con la BBDD.
-    connection_result = connect_to_db()
-
-    # Conexión con la BBDD.
-    connection = connection_result
+    connection = connect_to_db()
 
     try:
         cs = connection.cursor()
@@ -91,10 +88,7 @@ def create_employee(new_employee):
     success_create = True
 
     # Se intenta una conexión con la BBDD.
-    connection_result = connect_to_db()
-
-    # Conexión con la BBDD.
-    connection = connection_result
+    connection = connect_to_db()
 
     try:
         cs = connection.cursor()
@@ -125,11 +119,9 @@ def create_employee(new_employee):
 # Obtiene la información del empleado consultado.
 def employee_information(dni):
     result_set = ()
-    # Se intenta una conexión con el servidor.
-    connection_result = connect_to_db()
 
-    # Conexión con la BBDD.
-    connection = connection_result
+    # Se intenta una conexión con el servidor.
+    connection = connect_to_db()
 
     try:
         cs = connection.cursor()

@@ -16,7 +16,7 @@ def create_marktime(dni):
         time.sleep(2.5)
 
     # Redirección al menú de empleados.
-    te.employee_menu(vl.logged_employee)
+    te.menu(vl.logged_employee)
 
 
 # Envia los datos necesarios para registrar a un empleado.
@@ -30,7 +30,7 @@ def create_employee(employee_info):
         time.sleep(2.5)
 
     # Redirección al menú de empleados.
-    te.employee_menu(vl.logged_employee)
+    te.menu(vl.logged_employee)
 
 
 # Información del empleado a inhabilitar.
