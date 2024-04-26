@@ -15,7 +15,8 @@ from templates.commons import clean_screen
 actions = {
     1: 'Realizar marcación.',
     2: 'Registrar a un empleado.',
-    3: 'Inhabilitar a un empleado.'
+    3: 'Inhabilitar a un empleado.',
+    4: 'Salir del sistema.'
 }
 
 
@@ -79,6 +80,9 @@ def get_employee_actions(employee_permissions):
             employee_actions.append((order, id_action, description))
             order += 1
 
+    # Agrega una opción para salir del sistema.
+    employee_actions.append((order, 4, actions[4]))
+
     return employee_actions
 
 
@@ -108,6 +112,8 @@ def execute_action(employee_actions, selected_action, dni=None):
 
         # Inhabilitación del empleado.
         disable_employee(result, employee_to_disable, dni)
+    elif do == 4:
+        exit()
 
 
 # Muestra el meńu principal del empleado.
