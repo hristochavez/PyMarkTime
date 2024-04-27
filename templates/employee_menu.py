@@ -7,7 +7,6 @@ from colorama import Fore
 from templates.banner import banner
 from templates.commons import clean_screen
 
-
 # Permisos que puede tener un empleado:
 # 1 -> puede marcar.
 # 2 -> puede registrar empleados.
@@ -49,16 +48,19 @@ def disable_employee(result, employee_to_disable, dni):
         print(f'El empleado con DNI {employee_to_disable} no existe.')
         print(Fore.WHITE, end='')
         time.sleep(2.5)
-    elif result[1] == 0:
+    elif result[2] == 0:
         print(Fore.RED, end='')
         print(f'El empleado {result[0]} con DNI {employee_to_disable}'
               ' ya se encuentra inhabilitado.')
         print(Fore.WHITE, end='')
         time.sleep(2.5)
-    elif result[1] == 1:
+    elif result[2] == 1:
+        first_name = result[0].capitalize()
+        last_name = result[1].capitalize()
         print(Fore.YELLOW, end='')
-        response = input(f'¿Desea inhabilitar al empleado {result[0]} con '
-                            'DNI {dni_employee_to_disable}? Escriba S o N: ')
+        response = input('¿Desea inhabilitar al empleado ' + first_name + ' '
+                         + last_name + ' con DNI ' + employee_to_disable + '? '
+                         'Escriba S o N: ')
         print(Fore.WHITE, end='')
 
         response = vv.response_disable(response)
@@ -108,7 +110,7 @@ def execute_action(employee_actions, selected_action, dni=None):
     elif do == 3:
         # Solicita el dni del empleado a inhabilitar.
         employee_to_disable = input('Ingrese el DNI del empleado'
-                                        ' (8 caracteres): ')
+                                    ' (8 caracteres): ')
         employee_to_disable = vv.dni(employee_to_disable)
 
         # Resultado de la solicitud de la información del empleado.
