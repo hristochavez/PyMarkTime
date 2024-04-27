@@ -6,9 +6,9 @@ from mysql.connector import errors
 # Retorna:
 # True o False si la marcación se realizó correctamente.
 # Una cadena con un mensaje de error en el caso fallar la operación.
-def create_marktime(dni):
+def create_marktime(dni, marked_by):
     # Indica si la marcación se realizó con exito.
-    success_marking = True
+    success_marking = False
 
     # Se intenta una conexión con la BBDD.
     connection = connect_to_db()
@@ -16,13 +16,12 @@ def create_marktime(dni):
     try:
         cs = connection.cursor()
         stored_proc = 'create_marktime'
-        parameters = (dni, )
+        parameters = (dni, marked_by)
         cs.callproc(stored_proc, parameters)
         connection.commit()
     except AttributeError as err:
         print(f'Ocurio un error. Revisar: {err}.')
     except errors.IntegrityError:
-        success_marking = False
         connection.rollback()
     except errors.ProgrammingError:
         print('¿Existe el procedimiento almacenado?')
@@ -34,6 +33,7 @@ def create_marktime(dni):
         cs.close()
         connection.close()
     else:
+        success_marking = True
         cs.close()
         connection.close()
 

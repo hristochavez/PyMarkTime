@@ -6,8 +6,8 @@ import models.employees as me
 
 
 # Envia los datos para realizar la marcación de un empleado.
-def create_marktime(dni):
-    if me.create_marktime(dni):
+def create_marktime(dni, marked_by):
+    if me.create_marktime(dni, marked_by):
         print(Fore.GREEN + 'Marcación realizada correctamente.' + Fore.WHITE)
         time.sleep(1.5)
     else:
