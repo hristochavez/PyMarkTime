@@ -25,20 +25,16 @@ def format_new_employee():
     dni = input('Ingrese el DNI del empleado (8 caracteres): ')
     dni = vv.dni(dni)
 
-    first_name = input('Ingrese el primer nombre del empleado (solo debe '
-                       'contener letras): ')
+    first_name = input('Ingrese el primer nombre del empleado: ')
     first_name = vv.validate_name(first_name, 'primer nombre')
 
-    second_name = input('Ingrese el segundo nombre del empleado (solo '
-                        ' debe de contener letras o puede estar vacio.): ')
+    second_name = input('Ingrese el segundo nombre del empleado: ')
     second_name = vv.validate_second_name(second_name, 'segundo nombre')
 
-    last_name = input('Ingrese el primer apellido del empleado (solo '
-                      'debe de contener letras): ')
+    last_name = input('Ingrese el primer apellido del empleado: ')
     last_name = vv.validate_name(last_name, 'primer apellido')
 
-    second_last_name = input('Ingrese el segundo apellido del empleado (solo '
-                             'debe de contener letras): ')
+    second_last_name = input('Ingrese el segundo apellido del empleado: ')
     second_last_name = vv.validate_name(second_last_name, 'segundo apellido')
 
     # Retorna una tupla que contiene los datos del nuevo empleado.
