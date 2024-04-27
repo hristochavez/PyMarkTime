@@ -83,7 +83,7 @@ def get_employee(dni, password):
 
 
 # Crear a un empleado.
-def create_employee(new_employee):
+def create_employee(employee_info):
     # Indica si la marcación se realizó con exito.
     success_create = True
 
@@ -93,8 +93,7 @@ def create_employee(new_employee):
     try:
         cs = connection.cursor()
         stored_proc = 'create_employee'
-        parameters = (new_employee['dni'], new_employee['first_name'])
-        cs.callproc(stored_proc, parameters)
+        cs.callproc(stored_proc, employee_info)
         connection.commit()
     except AttributeError as err:
         print(f'Ocurio un error. Revisar: {err}.')

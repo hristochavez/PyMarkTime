@@ -9,6 +9,9 @@ USE pymarktime;
 CREATE TABLE employees(
 	dni CHAR(8) NOT NULL,
 	first_name VARCHAR(30) NOT NULL,
+    second_name VARCHAR(30),
+    last_name VARCHAR(30) NOT NULL,
+    second_last_name VARCHAR(30) NOT NULL,
 	pass CHAR(64) NOT NULL,
 	is_enabled TINYINT(1) DEFAULT 1 NOT NULL,
 	updated_by CHAR(8),
@@ -87,16 +90,24 @@ DROP PROCEDURE IF_EXISTS create_employee;
 DELIMITER $
 CREATE PROCEDURE create_employee(
 	IN dni CHAR(8),
-	IN first_name VARCHAR(30)
+	IN first_name VARCHAR(30),
+	IN second_name VARCHAR(30),
+	IN last_name VARCHAR(30),
+	IN second_last_name VARCHAR(30)
 )
 BEGIN
 	-- Por defecto crea la contraseña 1234 al empleado recien creado.
 	DECLARE pass CHAR(64);
 	SELECT SHA2('1234', 256) INTO pass;
 
-	INSERT INTO employees(dni, first_name, pass)
-	VALUES(dni, first_name, pass);
+    -- Crea a un empleado.
+    INSERT INTO
+        employees (
+            dni, first_name, second_name, last_name, second_last_name, pass
+        )
+    VALUES (dni, first_name, second_name, last_name, second_last_name, pass);
 	
+    -- Otorga el permiso para marcar al empleado recien creado.
 	INSERT INTO employee_permission(dni, permission)
 	VALUES(dni, 1);
 END $
