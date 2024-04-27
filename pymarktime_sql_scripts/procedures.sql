@@ -90,6 +90,7 @@ CREATE PROCEDURE employee_information(
 BEGIN
 	SELECT
 		t1.first_name,
+        t1.last_name,
 		t1.is_enabled
 	FROM
 		employees AS t1
