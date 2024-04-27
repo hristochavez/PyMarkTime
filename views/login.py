@@ -13,16 +13,18 @@ def hash_password(employee_pass):
 
 
 # Formatea la información retornada de la consulta para crear a un empleado.
-def format_employee(data):
-    dni = data[0][0]
-    first_name = data[0][1]
+def format_employee(employee_info):
+    dni = employee_info[0][0]
+    first_name = employee_info[0][1]
+    last_name = employee_info[0][2]
     permissions = []
-    for row in data:
-        permissions.append(row[2])
+    for row in employee_info:
+        permissions.append(row[3])
 
     employee = {
         'dni': dni,
         'first_name': first_name,
+        'last_name': last_name,
         'permissions': permissions
     }
 

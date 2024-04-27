@@ -125,8 +125,8 @@ def menu(employee):
     clean_screen()
     banner()
 
-    print(f'DNI: {employee["dni"]}')
-    print(f'Bienvenido(a) {employee["first_name"]}')
+    print(f'DNI: {employee["dni"]}.')
+    print(f'Bienvenido(a) {employee["first_name"]} {employee["last_name"]}.')
     print('')
 
     # Muestra los permisos que tiene el usuario.
