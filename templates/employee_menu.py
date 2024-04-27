@@ -104,7 +104,7 @@ def execute_action(employee_actions, selected_action, dni=None):
             break
 
     if do == 1:
-        va.create_marktime(dni)
+        va.create_marktime(dni, dni)
     elif do == 2:
         va.create_employee(format_new_employee())
     elif do == 3:
