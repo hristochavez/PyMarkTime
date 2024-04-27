@@ -40,7 +40,7 @@ CREATE TABLE employee_permission(
 	dni CHAR(8) NOT NULL,
 	permission INT NOT NULL,
 	CONSTRAINT pk_dni_permission PRIMARY KEY (dni, permission),
-	CONSTRAINT fk_dni FOREIGN KEY (dni) REFERENCES employees(dni),
+	CONSTRAINT fk_dni FOREIGN KEY (dni) REFERENCES employees(dni) ON UPDATE CASCADE,
 	CONSTRAINT fk_permissions FOREIGN KEY (permission) REFERENCES permissions(id)
 );
 
@@ -59,6 +59,7 @@ BEGIN
     SELECT
 		t1.dni,
 		t1.first_name,
+        t1.last_name,
 		t2.permission
 	FROM
 		employees AS t1
