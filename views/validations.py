@@ -7,8 +7,7 @@ from colorama import Fore
 def dni(dni):
     pattern = r'^\d{8}$'
     while not re.match(pattern, dni):
-        print(Fore.RED + 'Ingrese un DNI valido. Solo debe de tener 8 '
-                         'dígitos.' + Fore.WHITE)
+        print(Fore.RED + 'SOLO PUEDE CONTENER 8 DIGITOS.' + Fore.WHITE)
         dni = input('Ingrese un DNI válido: ')
 
     return dni
@@ -19,8 +18,7 @@ def dni(dni):
 def password(password):
     pattern = r'^\d{4}$'
     while not re.match(pattern, password):
-        print(Fore.RED + 'Ingrese una contraseña valida. Solo debe de tener 4 '
-                         'dígitos.' + Fore.WHITE)
+        print(Fore.RED + 'SOLO PUEDE CONTENER 4 DIGITOS.' + Fore.WHITE)
         password = input('Ingrese una contraseña válida: ')
 
     return password
@@ -31,8 +29,7 @@ def password(password):
 def validate_name(name, type):
     pattern = r'^[a-zA-Z]+$'
     while not re.match(pattern, name):
-        print(Fore.RED + 'Ingrese un ' + type + '. Solo debe de tener '
-                                                'letras.' + Fore.WHITE)
+        print(Fore.RED + 'SOLO PUEDE CONTENER LETRAS.' + Fore.WHITE)
         name = input('Ingrese un ' + type + ': ')
 
     return name.strip()
@@ -43,8 +40,7 @@ def validate_name(name, type):
 def validate_second_name(name, type):
     pattern = r'^[a-zA-Z]*$'
     while not re.match(pattern, name):
-        print(Fore.RED + 'Ingrese un ' + type + ' valido. SOLO DEBE CONTENER '
-                                                'LETRAS.' + Fore.WHITE)
+        print(Fore.RED + 'SOLO PUEDE CONTENER LETRAS.' + Fore.WHITE)
         name = input('Ingrese un ' + type + ': ')
 
     if name == '':
@@ -55,7 +51,7 @@ def validate_second_name(name, type):
 
 # Valida la respuesta si se deseea deshabilitar a un empleado.
 def response_disable(response):
-    while response not in ['S', 's', 'n', 'N']:
+    while response not in ['S', 's', 'N', 'n']:
         response = input('Escriba S o N para inhabilitar al empleado: ')
 
     return response
