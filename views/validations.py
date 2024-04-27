@@ -26,16 +26,31 @@ def password(password):
     return password
 
 
-# Validación del nombre.
-# Nombre: Solo debe de tener letras.
-def first_name(first_name):
+# Validación del nombre y los apellidos.
+# Nombre o apellidos: Solo puede contener letras.
+def validate_name(name, type):
     pattern = r'^[a-zA-Z]+$'
-    while not re.match(pattern, first_name):
-        print(Fore.RED + 'Ingrese un nombre válido. Solo debe de tener '
-                         'letras.' + Fore.WHITE)
-        first_name = input('Ingrese un nombre válido: ')
+    while not re.match(pattern, name):
+        print(Fore.RED + 'Ingrese un ' + type + '. Solo debe de tener '
+                                                'letras.' + Fore.WHITE)
+        name = input('Ingrese un ' + type + ': ')
 
-    return first_name
+    return name.strip()
+
+
+# Valida el segundo nombre.
+# Segundo nombre: Puede estar vacio o contener solo letras.
+def validate_second_name(name, type):
+    pattern = r'^[a-zA-Z]*$'
+    while not re.match(pattern, name):
+        print(Fore.RED + 'Ingrese un ' + type + ' valido. SOLO DEBE CONTENER '
+                                                'LETRAS.' + Fore.WHITE)
+        name = input('Ingrese un ' + type + ': ')
+
+    if name == '':
+        return None
+    else:
+        return name.strip()
 
 
 # Valida la respuesta si se deseea deshabilitar a un empleado.
