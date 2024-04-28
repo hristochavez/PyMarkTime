@@ -1,7 +1,9 @@
 -- Este script debe de ser ejecutado por algún usuario que tenga permisos
 -- en la BBDD para crear a otros usuarios de BBDD.
 
--- Crea al usuario de la BBDDD.
+-- Crea al usuario y contraseña de la BBDDD.
+-- Puedes elegir el nombre de usuario que quieras. Yo elegí 'usr-dev'.
+-- Puedes colocar la contraseña que quieras. Yo elegí 'Hack2024$$'.
 CREATE USER `usr-dev`@`localhost` IDENTIFIED BY `Hack2024$$`;
 
 -- Crea la BBDD.

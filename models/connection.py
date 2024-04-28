@@ -1,4 +1,12 @@
+import os
+from dotenv import load_dotenv
 from mysql.connector import connect, Error
+
+load_dotenv()
+
+db_host = os.getenv('DB_HOST')
+db_user = os.getenv('DB_USER')
+db_password = os.getenv('DB_PASSWORD')
 
 
 def connect_to_db():
@@ -6,9 +14,9 @@ def connect_to_db():
 
     try:
         connection = connect(
-            host='localhost',
-            user='usr-dev',
-            password='Hack2024$$',
+            host=db_host,
+            user=db_user,
+            password=db_password,
             database='pymarktime'
         )
     except Error:
