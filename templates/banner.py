@@ -4,7 +4,7 @@ from colorama import Fore
 
 # Banner del sistema.
 def banner():
-    name_system = 'Sistema PyMarkTime'
+    name_system = 'PyMarkTime-Consola'
     spaces = qty_chars(name_system)
     print(Fore.BLUE)
     decorator()
