@@ -26,7 +26,7 @@ def login_screen(fail=False):
         print('')
 
     # Solicitar DNI y contraseña al usuario.
-    employee_credentials = get_dni_pass()
+    dni, password = get_dni_pass()
 
     # Comunicación con view login.
-    login_employee(employee_credentials[0], employee_credentials[1])
+    login_employee(dni, password)

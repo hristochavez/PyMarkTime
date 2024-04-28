@@ -126,9 +126,12 @@ def execute_action(employee_actions, selected_action, dni=None):
 def menu(employee):
     clean_screen()
     banner()
+    dni = employee['dni']
+    first_name = employee['first_name'].capitalize()
+    last_name = employee['last_name'].capitalize()
 
-    print(f'DNI: {employee["dni"]}.')
-    print(f'Bienvenido(a) {employee["first_name"]} {employee["last_name"]}.')
+    print(f'DNI: {dni}.')
+    print(f'Bienvenido(a) {first_name} {last_name}.')
     print('')
 
     # Muestra los permisos que tiene el usuario.
